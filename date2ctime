@@ -1,0 +1,18 @@
+#!/bin/sh
+# date2ctime - convert a date string into a Unix time integer
+# Steve Kinzler, kinzler@cs.indiana.edu, Jan 00
+# http://www.cs.indiana.edu/~kinzler/home.html#unix
+# Tweaked cosmetically by Reuben Thomas   10th February 2016
+
+usage="usage: `basename $0` [DATE]"
+if [ "$1" = "-h" ]; then
+    echo $usage
+    exit 0
+fi
+if [ $# -eq 0 ]; then
+    date=`date`
+else
+    date=$1
+fi
+
+echo `date +%s -d "$date"`

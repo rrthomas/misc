@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+# Grep in a dictionary [default: system default]
+# Reuben Thomas   sh version 12/1/07; rewritten in Perl 27/1/10
+# This program is in the public domain
+
+use warnings;
+use strict;
+
+use File::Basename;
+
+my $name = basename($0);
+
+sub dieWithUsage {
+  die "Usage: $name [-l LANGUAGE] [GREP_OPTIONS] PATTERN\n";
+}
+
+dieWithUsage() if $#ARGV < 0;
+
+my $lang = "words";
+if ($ARGV[0] eq "-l") {
+  shift;
+  dieWithUsage() if $#ARGV < 1;
+  $lang = shift;
+}
+
+push @ARGV, "/usr/share/dict/$lang";
+
+system "grep", @ARGV;

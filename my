@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+# my
+# Find files matching a case-insensitive pattern under the user's home directory
+# Needs (m)locate & GNU grep
+# (c) Reuben Thomas <rrt@sc3d.org> 29th January 2013, 15th May 2013, 20th June 2014, 26th March 2016
+# This program is in the public domain.
+
+# FIXME: Write a launcher that does something like: my $pattern | tee >(head -3 | xargs -d '\n' xdg-open-multi)
+# and split out the colorization into a wrapper that works for both that and my.
+
+use strict;
+use warnings;
+use POSIX 'isatty';
+use Getopt::Long;
+
+my ($case_flag);
+my $opts = GetOptions(
+  "case" => \$case_flag,
+ );
+my $case = $case_flag ? "" : "--ignore-case";
+
+my $pattern = pop;
+my $cmd = "locate --existing $case --regex @ARGV \"^$ENV{HOME}.*$pattern\" | grep -v \"^$ENV{HOME_LOCAL}/var/\"";
+$cmd .= " | grep $case --color=auto -- \"$pattern\"" if isatty(*STDOUT);
+system $cmd;

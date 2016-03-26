@@ -1,0 +1,15 @@
+#! /bin/sh
+# Grep files of a particular type
+# RRT   26sep03, 23rd October 2007
+# This program is in the public domain
+
+name=`basename $0`
+
+if [ $# -ge 2 ]; then
+    type=$1
+    pat=$2
+    shift 2
+    file --mime-type --dereference --uncompress -e tokens -- "$@" | grep $type | cut -d: -f 1 | xargs grep $pat
+else
+    echo "Usage: $name TYPE PATTERN FILE..."
+fi

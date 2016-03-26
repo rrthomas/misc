@@ -1,0 +1,23 @@
+#!/usr/bin/env perl
+# Perform a command, preserving the timestamp of a file
+# Reuben Thomas   24/6/10
+# This program is in the public domain
+
+use warnings;
+use strict;
+
+use File::Basename;
+use File::stat;
+
+my $name = basename($0);
+
+sub die_with_usage {
+  die "Usage: $name FILE COMMAND [ARG...]\n  N.B. The filename must be repeated in the command!\n";
+}
+
+die_with_usage() if $#ARGV < 1;
+
+my $file = shift;
+my $st = stat($file) or die "Couldn't stat $file";
+system @ARGV;
+utime $st->atime, $st->mtime, $file;

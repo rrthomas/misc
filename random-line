@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+# random-line
+# Copy a random line from stdin to stdout
+# (c) Reuben Thomas 3rd September 2009
+# This program is in the public domain
+
+use strict;
+use warnings;
+
+my @lines = <STDIN>;
+srand;
+print $lines[rand $#lines + 1];

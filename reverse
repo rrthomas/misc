@@ -1,0 +1,6 @@
+#!/bin/sh
+# reverse a file byte by byte
+# From http://stackoverflow.com/questions/6438099/linux-command-line-tool-to-reverse-byte-order-change-endianess
+# Reuben Thomas   1/8/12
+# This file is in the public domain
+tac -r -s '.\| ' "$@"

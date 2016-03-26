@@ -1,0 +1,17 @@
+#!/bin/sh
+# ctime2date - convert a Unix time integer into a date string
+# Reuben Thomas   10th February 2016
+# After Steve Kinzler (see date2ctime; his ctime2date used the inferior Perl ctime.pl)
+
+usage="usage: `basename $0` [DATE]"
+if [ "$1" = "-h" ]; then
+    echo $usage
+    exit 0
+fi
+if [ $# -eq 0 ]; then
+    date=`date +%s`
+else
+    date=$1
+fi
+
+date -d @$date

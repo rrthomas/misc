@@ -1,0 +1,34 @@
+#!/usr/bin/env perl
+# countdir
+# Count non-dot files and directories in a directory
+# Reuben Thomas  2/1/09-22/9/09
+# This program is in the public domain
+
+use strict;
+use warnings;
+
+use File::Basename;
+
+# Return the non-dot files and directories in a directory as a list
+sub readDir {
+  my ($dir, $test) = @_;
+  $test ||= sub {(-f shift || -d _)};
+  opendir(DIR, $dir) || return ();
+  my @entries = grep {/^[^.]/ && &{$test}("$dir/$_")} readdir(DIR);
+  closedir DIR;
+  return @entries;
+}
+
+my $name = basename($0);
+
+if ($#ARGV >= 0) {
+  for my $dir (@ARGV) {
+    if (-d $dir) {
+      print "$dir " . scalar(readDir($dir)) . "\n";
+    } else {
+      warn "`$dir' does not exist or is not a directory";
+    }
+  }
+} else {
+  die "Usage: $name DIRECTORY...\n";
+}

@@ -1,0 +1,66 @@
+#!/usr/bin/env perl
+my $version = <<'END';
+counter
+(c) 2016 Reuben Thomas <rrt@sc3d.org>
+https://github.com/rrthomas/nancy/
+Distributed under the GNU General Public License version 3, or (at
+your option) any later version. There is no warranty.
+END
+
+use 5.10.0;
+use strict;
+use warnings;
+
+use File::Basename;
+use Getopt::Long;
+
+use Perl6::Slurp;
+
+# Get arguments
+my ($reset_value, $version_flag, $help_flag);
+my $prog = basename($0);
+my $opts = GetOptions(
+  "reset:i" => \$reset_value,
+  "version" => \$version_flag,
+  "help" => \$help_flag,
+ );
+die $version if $version_flag;
+die <<END if !$opts || $#ARGV != 0;
+Usage: $prog [OPTION...] COUNTER-FILE
+Increment and output a counter
+
+  --reset NUMBER    reset counter to NUMBER [default 0]
+  --version         show program version
+  --help            show this help
+
+  COUNTER-FILE is the file containing the counter
+
+The given file should contain just an integer; if empty or non-existent, it
+is set to 0.
+
+The file is rewritten with the integer plus one, followed by a trailing
+newline.
+END
+my $file = $ARGV[0];
+
+# FIXME: Use a module to add the boilerplate to the messages
+sub Die {
+  die "$prog: $_[0]\n";
+}
+
+# Read counter file, if any, and increment it
+my $counter = -1;
+if (-e $file) {
+  Die("`$file' is not a file") if !-f $file;
+  Die("`$file' is not readable") if !-r $file;
+  $counter = slurp($file);
+}
+
+# Update counter
+$counter = defined($reset_value) ? $reset_value : $counter + 1;
+
+# Output counter to stdout and update file
+say $counter;
+open(my $fh, ">", $file) or Die("could not open `$file' for writing");
+say $fh $counter;
+close($fh);

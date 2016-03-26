@@ -1,0 +1,37 @@
+#!/usr/bin/env perl
+# zcat
+# cat possibly compressed files
+# (c) Reuben Thomas   19/10/06-4/2/15
+# Distributed under the GNU General Public License version 3, or (at
+# your option) any later version. There is no warranty.
+
+
+# Depends on: acat (atool)
+# FIXME: Accept basic command-line options including --
+
+use strict;
+use warnings;
+
+use File::Basename;
+
+use Perl6::Slurp;
+
+my $name = basename($0);
+
+sub isCompressed {
+  my ($file) = @_;
+  local *READER;
+  open(READER, "-|", "file", "--mime", "--brief", "--uncompress", "--", $file);
+  my $mimetype = slurp \*READER;
+  chomp $mimetype;
+  return $mimetype =~ m/ compressed-encoding=/;
+}
+
+if ($#ARGV >= 0) {
+  foreach my $file (@ARGV) {
+    my @cat_cmd = (isCompressed($file) ? "acat" : "cat");
+    system @cat_cmd, "--", $file;
+  }
+} else {
+  die "Usage: $name FILE...\n";
+}
