@@ -1,0 +1,42 @@
+#!/bin/bash
+# Run a program with modified environment
+# (c) Reuben Thomas   29th April, 5th May 2013, 17th October 2013, 10th September 2014
+# Released under the GPL version 3, or (at your option) any later version.
+
+if [ $# -lt 2 ]; then
+cat <<EOF
+Usage: rerun [ENVIRONMENT] PROGRAM-PATH [ARGUMENT...]
+
+rerun allows a program to be run with a modified environment or arguments,
+without changing the way it is invoked. It allows the modified program and
+original program to be on the PATH, and works with session management.
+PROGRAM-PATH must be the full path to the invoking script; a typical
+invocation is:
+
+  exec rerun FOO=bar \$0 "\$@"
+EOF
+exit 1
+fi
+
+if [[ "$1" == *=* ]]; then
+  environment="$1"
+  shift
+fi
+program="$1"
+shift
+
+# Find real program
+path_remove ()  {
+    export PATH=`echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//'`
+}
+
+old_PATH="$PATH"
+path_remove $(dirname $program)
+real_program=$(which $(basename $program))
+export PATH="$old_PATH"
+
+# Execute program with environment and modified $0
+if test -n "$environment"; then
+    export $environment
+fi
+exec -a $program $real_program "$@"

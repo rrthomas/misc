@@ -1,0 +1,46 @@
+#!/usr/bin/env perl
+my $version_banner = <<END;
+watch 5
+Copyright (c) Reuben Thomas 1999-2014
+Released under the GPL version 3, or (at your option) any later version.
+END
+
+# bash version 10/9/1999, 26/2/2006
+# Perl version 2/4/2009; improve description 22/9/2009; add --wait and other options 30/1-1/2/2014
+
+use strict;
+use warnings;
+
+use File::Basename;
+use Getopt::Long;
+
+sub usage {
+  my ($exit_code) = @_;
+  print <<END;
+Usage: repeat [OPTION...] N COMMAND ARGUMENT...
+Repeat command N times, optionally with a delay (see also watch(1))
+
+  --wait DELAY         wait DELAY seconds between each invocation
+  --help               display this help and exit
+  --version            display version information and exit
+END
+  exit $exit_code;
+}
+
+my $prog = basename($0);
+my ($delay, $help_flag, $version_flag);
+my $opts = GetOptions(
+  "wait=i" => \$delay,
+  "help" => \$help_flag,
+  "version" => \$version_flag,
+ ) or usage(1);
+usage(0) if $#ARGV == -1;
+if ($version_flag) {
+  print STDERR $version_banner;
+  exit 0;
+}
+
+for (my $times = shift; $times > 0; $times--) {
+  system @ARGV;
+  sleep $delay if defined($delay);
+}

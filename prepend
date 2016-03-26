@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+# prepend
+# Prepend stdin to some files
+# (c) Reuben Thomas <rrt@sc3d.org> sh version 28/9/2002, 26/12/2005; Perl version 14/8/2009
+# Released under the GPL version 3, or (at your option) any later version.
+
+use strict;
+use warnings;
+
+use Perl6::Slurp;
+use File::Basename;
+my $name = basename($0);
+
+die "Usage: $name FILE...\n" if $#ARGV < 0;
+
+my $prefix_file = slurp \*STDIN or die "Could not read stdin\n";
+
+for my $file (@ARGV) {
+  my $output = $prefix_file . slurp $file;
+  open OUT, ">$file" or warn "Could not write to `$file'\n";
+  print OUT $output;
+}

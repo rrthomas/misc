@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+# thumbify
+# Add EXIF thumbnails to images
+# (c) Reuben Thomas <rrt@sc3d.org> 14/8/2006, 2/10/2007, 9/6/2008, 12/4/2010, 30/6/2012, 7/7/2013
+# Released under the GPL version 3, or (at your option) any later
+# version.
+
+use strict;
+use warnings;
+
+use Perl6::Slurp;
+use File::Basename;
+use Image::ExifTool;
+
+my $name = basename($0);
+
+foreach my $file (@ARGV) {
+  my $exifTool = new Image::ExifTool;
+  my %options = ();
+  $exifTool->ExtractInfo($file, \%options);
+  open(READER, "-|", "convert", $file, "-size", "160x160", "-resize", "160x160", "jpeg:-");
+  my $thumbnail = scalar(slurp '<:raw', \*READER);
+  $exifTool->SetNewValue('thumbnailimage', $thumbnail);
+  unless ($exifTool->WriteInfo($file)) {
+    my $err = $exifTool->GetValue('Error');
+    die "$name: Could not write `$file': $err\n"
+  }
+}

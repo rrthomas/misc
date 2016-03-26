@@ -1,0 +1,7 @@
+#! /bin/sh
+# hardwrap
+# Hard wrap text
+# (c) Reuben Thomas <rrt@sc3d.org> 1999ish
+# This program is in the public domain
+
+fold -s -w 72 "$@"

@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+# lp2
+# Print a file double-sided, with a prompt between the two halves
+# (c) Reuben Thomas <rrt@sc3d.org> 4/1/1999, 14/7/2002, 17/2, 20/10/2006,
+# 2/3/2007, 11/7/2008, 20, 27/4/2010
+# Released under the GPL version 3, or (at your option) any later
+# version.
+
+# First the even pages are printed in order, then the odd pages. On a
+# printer with a straight paper path where the printed side comes out
+# face down (like mine!), this ensures that the document is delivered
+# with page 1 at the bottom and facing down.
+
+use strict;
+use warnings;
+
+use File::Basename;
+
+my $name = basename($0);
+
+die "Usage: $name FILE...\n" if $#ARGV < 0;
+
+foreach my $file (@ARGV) {
+  if (-f $file) {
+    system "lp", "-o", "page-set=even", $file;
+    print STDERR "Turn the paper over and press <Return>\n";
+    <STDIN>;
+    system "lp", "-o", "page-set=odd", $file;
+  } else {
+    print STDERR "$name: `$file' could not be read\n";
+  }
+}

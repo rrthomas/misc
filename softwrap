@@ -1,0 +1,110 @@
+#!/usr/bin/env lua
+spec = [[
+softwrap 0.35
+Copyright (c) 2015 Reuben Thomas <rrt@sc3d.org>
+
+Usage: softwrap FILE...
+
+Convert hard-wrapped text files into soft-wrapped ones.
+
+Options:
+
+  -w, --width=N     set the minimum width in characters of the first line of a paragraph
+  -l, --latex       LaTeX mode: comments and lines starting with \begin, \end or \item are not wrapped
+  -n, --nuweb       Nuweb mode: implies LaTeX mode, and chunks (between @{ and @}) will not be wrapped
+      --help        display this help, then exit
+      --version     display version information, then exit
+]]
+-- FIXME: softwrap files in place, with ~ backups. Need a framework
+-- for transforming files this way.
+
+require "std".barrel ()
+
+
+-- Default options
+minWidth = 65
+
+-- wrapLines: soft-wrap a list of text lines into paragraphs
+--   width: the minimum width of the first line of a paragraph
+--   line: list of text lines
+-- returns
+--   para: list of paragraphs
+function wrapLines (width, line)
+  local wrapped, i, lines = {}, 1, #line
+  repeat
+    while i <= lines and (not nuweb or
+                          not (string.find (line[i], "@{")))
+      and (string.len (line[i]) < width or
+           (latex and (string.find (line[i], "[^\\]%%") or
+                       string.find (line[i], "\\\\") or
+                         string.find (line[i], "&%s*$"))))
+    do
+      table.insert (wrapped, line[i])
+      i = i + 1
+    end
+    if i <= lines and (nuweb and string.find (line[i], "@{")) then
+      while i < #line and not (string.find (line[i], "@}")) do
+        table.insert (wrapped, line[i])
+        i = i + 1
+      end
+    end
+    if i <= lines then
+      table.insert (wrapped, line[i])
+      i = i + 1
+    end
+    while i <= lines and string.len (line[i]) > 0 and
+      string.sub (line[i], 1, 1) ~= " " and
+      not (nuweb and string.find (line[i], "@{")) and
+      not (latex and (string.find (#wrapped, "\\\\") or
+                      (string.find (line[i], "\\begin") or
+                       string.find (line[i], "\\end") or
+                         string.find (line[i], "\\item"))))
+    do
+      wrapped[#wrapped] = wrapped[#wrapped] ..
+        " " .. line[i]
+      i = i + 1
+    end
+  until i > lines
+  for i = 1, #wrapped do
+    wrapped[i] = wrapped[i] .. "\n"
+  end
+  return wrapped
+end
+
+-- Process a file
+function softwrap (file)
+  local line = wrapLines (width, io.readlines ())
+  io.stdin:close () -- close the input file
+  list.map (io.write, line)
+end
+
+-- Main routine
+local OptionParser = require "std.optparse"
+local parser = OptionParser (spec)
+_G.arg = parser:parse (_G.arg)
+width = opts.width and 1 or minWidth
+nuweb = opts.nuweb and 1
+latex = opts.latex and 1 or nuweb
+io.process_files (softwrap)
+
+
+-- Changelog
+
+-- 27feb15  0.35 Update to match stdlib
+-- 20jan14  0.34 Switch from getopt to optparse
+-- 04apr11  0.33 readLines --> readlines
+-- 08oct06  0.32 table.getn --> #
+-- 18mar06  0.31 Update to match stdlib
+-- 17dec03  0.3  Allow input from stdin
+--               Fix output bug (0.25 was broken)
+--               Update to match stdlib
+-- 12sep03  0.25 Update for Lua 5
+-- 02feb03  0.24 Now need to print usage message explicitly if no args
+-- 02nov02  0.23 Updated to match stdlib
+-- 21jun02  0.22 Updated to match stdlib
+-- 03jan02  0.21 Updated to match stdlib
+-- 20may01,
+-- 27jun01-
+-- 01jul01  0.2  Rewritten in Lua
+-- 22may97-
+-- 14oct00       Icon version
