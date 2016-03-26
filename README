@@ -56,12 +56,6 @@ A signature-with-random-tagline generator: it appends a random line from @~/.tag
 Print files two-sided on a one sided printer by printing the even and then the odd pages. It's set up to work sensibly on my printer (straight paper path, pages come out face down). It works with any file type that CUPS can print.
 
 
-[/.local/bin/hb|hb] (bash)
-===================
-
-Reports the size of files on the @PATH@.
-
-
 [/.local/bin/findcore|findcore] (sh)
 ===============================
 
