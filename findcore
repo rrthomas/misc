@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 # findcore
 # Find core dumps (including from Valgrind)
 # (c) Reuben Thomas <rrt@sc3d.org> 5/4/2006, 2/2/2007, 4/4/2011, 30/9/11

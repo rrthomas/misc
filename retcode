@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 # retcode
 # Run a command and print its return code
 # (c) Reuben Thomas <rrt@sc3d.org> 5/11/1999, 1/10/2006, 23/10/2007

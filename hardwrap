@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 # hardwrap
 # Hard wrap text
 # (c) Reuben Thomas <rrt@sc3d.org> 1999ish

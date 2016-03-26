@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # lp2
 # Print a file double-sided, with a prompt between the two halves
 # (c) Reuben Thomas <rrt@sc3d.org> 4/1/1999, 14/7/2002, 17/2, 20/10/2006,
