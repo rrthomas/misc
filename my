@@ -5,7 +5,7 @@
 # (c) Reuben Thomas <rrt@sc3d.org> 29th January 2013, 15th May 2013, 20th June 2014, 26th March 2016
 # This program is in the public domain.
 
-# FIXME: Write a launcher that does something like: my $pattern | tee >(head -3 | xargs -d '\n' xdg-open-multi)
+# FIXME: Write a launcher that does something like: my $pattern | tee >(head -3 | xargs -d '\n' xdg-open)
 # and split out the colorization into a wrapper that works for both that and my.
 
 use strict;
