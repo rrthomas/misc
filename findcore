@@ -1,7 +1,8 @@
 #!/bin/sh
 # findcore
 # Find core dumps (including from Valgrind)
-# (c) Reuben Thomas <rrt@sc3d.org> 5/4/2006, 2/2/2007, 4/4/2011, 30/9/11
+# (c) Reuben Thomas <rrt@sc3d.org> 5/4/2006, 2/2/2007, 4/4/2011, 30/9/2011, 23/3/2017
 # This program is in the public domain
 
-locate -0er "/\(vg\)\?core\(\.\[0-9\]\+\)\?$" | xargs -0 ls -ld | grep -v ^[dl]
+locate -0er "/\(vg\)\?core\(\.\[0-9\]\+\)\?$" | \
+    xargs -L 1 --null --no-run-if-empty sh -c 'if test `file --brief --mime-type "$1"` = "application/x-coredump" ; then echo "$1"; fi' list
