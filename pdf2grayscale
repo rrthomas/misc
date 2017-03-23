@@ -1,6 +1,6 @@
 #!/bin/sh
 # Convert PDF to grayscale
-# Reuben Thomas  19/1/11, 18/12/13, 1/4/14, 3/7/15
+# Reuben Thomas  19/1/11, 18/12/13, 1/4/14, 3/7/15, 1/10/16
 # This program is in the public domain
 
 if [ $# -lt 2 ]; then
@@ -12,7 +12,7 @@ fi
 
 # Command from http://bugs.ghostscript.com/show_bug.cgi?id=694608
 # With recent tickets (7/2015), almost the entire ticket part comes out black
-#gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dProcessColorModel=/DeviceGray -dColorConversionStrategy=/Gray -dPDFUseOldCMS=false -o "$2" -f "$1"
+#gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dProcessColorModel=/DeviceGray -sColorConversionStrategy=Gray -dPDFUseOldCMS=false -o "$2" -f "$1"
 
 # Alternative (higher DPI takes forever or fails to print):
 convert -density 300 -colorspace GRAY "$1" "$2"
