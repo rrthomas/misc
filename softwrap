@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 spec = [[
-softwrap 0.35
-Copyright (c) 2015 Reuben Thomas <rrt@sc3d.org>
+softwrap 0.36
+Copyright (c) 2017 Reuben Thomas <rrt@sc3d.org>
 
 Usage: softwrap FILE...
 
@@ -19,6 +19,7 @@ Options:
 -- for transforming files this way.
 
 require "std".barrel ()
+local std = require "std"
 
 
 -- Default options
@@ -75,13 +76,13 @@ end
 function softwrap (file)
   local line = wrapLines (width, io.readlines ())
   io.stdin:close () -- close the input file
-  list.map (io.write, line)
+  std.functional.map (io.write, std.ielems, line)
 end
 
 -- Main routine
 local OptionParser = require "std.optparse"
 local parser = OptionParser (spec)
-_G.arg = parser:parse (_G.arg)
+_G.arg, opts = parser:parse (_G.arg)
 width = opts.width and 1 or minWidth
 nuweb = opts.nuweb and 1
 latex = opts.latex and 1 or nuweb
@@ -90,6 +91,7 @@ io.process_files (softwrap)
 
 -- Changelog
 
+-- 25apr17  0.36 Update to match stdlib 41.2.0
 -- 27feb15  0.35 Update to match stdlib
 -- 20jan14  0.34 Switch from getopt to optparse
 -- 04apr11  0.33 readLines --> readlines
