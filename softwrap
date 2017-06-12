@@ -91,27 +91,3 @@ width = opts.width and 1 or minWidth
 nuweb = opts.nuweb and 1
 latex = opts.latex and 1 or nuweb
 io.process_files (softwrap)
-
-
--- Changelog
-
--- 12jun17  0.37 Fix various lint warnings
--- 25apr17  0.36 Update to match stdlib 41.2.0
--- 27feb15  0.35 Update to match stdlib
--- 20jan14  0.34 Switch from getopt to optparse
--- 04apr11  0.33 readLines --> readlines
--- 08oct06  0.32 table.getn --> #
--- 18mar06  0.31 Update to match stdlib
--- 17dec03  0.3  Allow input from stdin
---               Fix output bug (0.25 was broken)
---               Update to match stdlib
--- 12sep03  0.25 Update for Lua 5
--- 02feb03  0.24 Now need to print usage message explicitly if no args
--- 02nov02  0.23 Updated to match stdlib
--- 21jun02  0.22 Updated to match stdlib
--- 03jan02  0.21 Updated to match stdlib
--- 20may01,
--- 27jun01-
--- 01jul01  0.2  Rewritten in Lua
--- 22may97-
--- 14oct00       Icon version
