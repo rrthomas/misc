@@ -9,9 +9,13 @@ Convert hard-wrapped text files into soft-wrapped ones.
 
 Options:
 
-  -w, --width=N     set the minimum width in characters of the first line of a paragraph
-  -l, --latex       LaTeX mode: comments and lines starting with \begin, \end or \item are not wrapped
-  -n, --nuweb       Nuweb mode: implies LaTeX mode, and chunks (between @{ and @}) will not be wrapped
+  -w, --width=N     set the minimum width in characters of the first
+                    line of a paragraph [default: 65]
+  -l, --latex       LaTeX mode: comments and lines starting with
+                    \begin, \end or \item, or containing \\ or &, are
+                    not wrapped
+  -n, --nuweb       Nuweb mode: implies LaTeX mode, and chunks
+                    (between @{ and @}) will not be wrapped
       --help        display this help, then exit
       --version     display version information, then exit
 ]]
