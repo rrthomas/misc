@@ -15,8 +15,6 @@ Options:
       --help        display this help, then exit
       --version     display version information, then exit
 ]]
--- FIXME: softwrap files in place, with ~ backups. Need a framework
--- for transforming files this way.
 
 require "std".barrel ()
 local std = require "std"
