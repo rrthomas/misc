@@ -1,0 +1,5 @@
+#!/bin/sh
+# Create and update per-user mlocate database
+# Reuben Thomas 29th August 2017
+
+updatedb --require-visibility no --database-root $HOME --output `xdg-cache-dir`/mlocate.db "$@"

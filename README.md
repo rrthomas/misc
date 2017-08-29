@@ -32,11 +32,11 @@ Run a command with a modified environment. Works with commands found on the `PAT
 Perform a command, preserving the timestamp of a file.
 
 
-## [my](my) (Perl)
+## [my](my) (Perl, sh)
 
-*Needs `locate` and GNU `grep`*
+*Needs `mlocate` and GNU `grep`*
 
-Find a file in the user’s home directory. GNU grep is used for colour output when standard output is a terminal.
+Find a file in the user’s home directory. GNU grep is used for colour output when standard output is a terminal. Uses a database created by `myupdatedb`.
 
 
 ## [countdir](countdir) (Perl)
