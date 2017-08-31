@@ -24,6 +24,6 @@ my $case = $case_flag ? "" : "--ignore-case";
 my $pattern = pop || "";
 my $xdg_cache_dir = `xdg-cache-dir`;
 chomp $xdg_cache_dir;
-my $cmd = "mlocate $case --database $xdg_cache_dir/mlocate.db $case @ARGV \"$pattern\"";
+my $cmd = "mlocate $case --database $xdg_cache_dir/mlocate.db @ARGV \"$pattern\"";
 $cmd .= " | grep $case --color=auto -- \"$pattern\"" if isatty(*STDOUT);
 system $cmd;
