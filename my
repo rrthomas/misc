@@ -21,7 +21,7 @@ my $opts = GetOptions(
  );
 my $case = $case_flag ? "" : "--ignore-case";
 
-my $pattern = pop;
+my $pattern = pop || "";
 my $xdg_cache_dir = `xdg-cache-dir`;
 chomp $xdg_cache_dir;
 my $cmd = "mlocate $case --database $xdg_cache_dir/mlocate.db $case @ARGV \"$pattern\"";
