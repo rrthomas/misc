@@ -2,7 +2,7 @@
 # my
 # Find files matching a case-insensitive pattern under the user's home directory
 # Colour the output if stdout is a tty
-# Needs mlocate & GNU grep
+# GNU grep
 # (c) Reuben Thomas <rrt@sc3d.org> 2013-2017
 # This program is in the public domain.
 
@@ -24,6 +24,4 @@ my $case = $case_flag ? "" : "--ignore-case";
 my $pattern = pop || "";
 my $xdg_cache_dir = `xdg-cache-dir`;
 chomp $xdg_cache_dir;
-my $cmd = "mlocate $case --database $xdg_cache_dir/mlocate.db @ARGV \"$pattern\"";
-$cmd .= " | grep $case --color=auto -- \"$pattern\"" if isatty(*STDOUT);
-system $cmd;
+system "grep $case --color=auto @ARGV \"$pattern\" $xdg_cache_dir/locate.db.txt";

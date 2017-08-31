@@ -1,5 +1,9 @@
 #!/bin/sh
 # Create and update per-user mlocate database
-# Reuben Thomas 29th August 2017
+# Reuben Thomas 29th-31st August 2017
 
-updatedb --require-visibility no --database-root $HOME --output `xdg-cache-dir`/mlocate.db "$@"
+db_file=`xdg-cache-dir`/locate.db
+# FIXME: To support GNU findutils, --database-root must be --localpaths
+# and "--require-visibility no" must be omitted
+updatedb --require-visibility no --database-root $HOME --output $db_file "$@"
+locate --database $db_file "" > $db_file.txt
