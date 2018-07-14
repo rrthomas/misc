@@ -17,11 +17,6 @@ Repeat a command a certain number of times.
 Run a command and print its return code.
 
 
-## [rep](rep) (Perl)
-
-Perform a regex search and replace on the given files.
-
-
 ## [rerun](rerun) (bash)
 
 Run a command with a modified environment. Works with commands found on the `PATH`, and with session managers (when your session is restarted, the command will be run again with its modified environment). Useful for running programs with `LD_PRELOAD`.
