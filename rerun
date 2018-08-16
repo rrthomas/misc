@@ -1,9 +1,9 @@
 #!/bin/bash
 # Run a program with modified environment
-# (c) Reuben Thomas   29th April, 5th May 2013, 17th October 2013, 10th September 2014
+# (c) Reuben Thomas   29th April, 5th May 2013, 17th October 2013, 10th September 2014, 16th August 2018
 # Released under the GPL version 3, or (at your option) any later version.
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 1 ]; then
 cat <<EOF
 Usage: rerun [ENVIRONMENT] PROGRAM-PATH [ARGUMENT...]
 
