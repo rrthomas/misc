@@ -33,6 +33,10 @@ path_remove ()  {
 old_PATH="$PATH"
 path_remove $(dirname $program)
 real_program=$(which $(basename $program))
+if [[ "$?" != 0 ]]; then
+    echo Could not find program $program
+    exit 1
+fi
 export PATH="$old_PATH"
 
 # Execute program with environment and modified $0
