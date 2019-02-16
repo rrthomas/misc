@@ -2,8 +2,8 @@
 # my
 # Find files matching a case-insensitive pattern under the user's home directory
 # Colour the output if stdout is a tty
-# GNU grep
-# (c) Reuben Thomas <rrt@sc3d.org> 2013-2017
+# Needs GNU grep
+# (c) Reuben Thomas <rrt@sc3d.org> 2013-2019
 # This program is in the public domain.
 
 # FIXME: Write a launcher that does something like: my $pattern | tee >(head -3 | xargs -d '\n' xdg-open)
@@ -15,13 +15,7 @@ use warnings;
 use POSIX 'isatty';
 use Getopt::Long;
 
-my ($case_flag);
-my $opts = GetOptions(
-  "case" => \$case_flag,
- );
-my $case = $case_flag ? "" : "--ignore-case";
-
 my $pattern = pop || "";
 my $xdg_cache_dir = `xdg-cache-dir`;
 chomp $xdg_cache_dir;
-system "grep $case --color=auto @ARGV \"$pattern\" $xdg_cache_dir/locate.db.txt";
+system "grep", "--color=auto", @ARGV, $pattern, "$xdg_cache_dir/locate.db.txt";
