@@ -14,9 +14,6 @@ use 5.10.0;
 use strict;
 use warnings;
 
-use POSIX 'isatty';
-use Getopt::Long;
-
 # Get regexp to search for
 my $pattern = pop || "";
 
