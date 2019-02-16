@@ -9,13 +9,27 @@
 # FIXME: Write a launcher that does something like: my $pattern | tee >(head -3 | xargs -d '\n' xdg-open)
 # and split out the colorization into a wrapper that works for both that and my.
 
+use 5.10.0;
+
 use strict;
 use warnings;
 
 use POSIX 'isatty';
 use Getopt::Long;
 
+# Get regexp to search for
 my $pattern = pop || "";
+
+# Get location of database
 my $xdg_cache_dir = `xdg-cache-dir`;
 chomp $xdg_cache_dir;
-system "grep", "--color=auto", @ARGV, $pattern, "$xdg_cache_dir/locate.db.txt";
+my $database = "$xdg_cache_dir/locate.db.txt";
+
+# Grep database
+open(my $cmd, '-|', "grep", "--color=auto", @ARGV, $pattern, $database) or die $!;
+
+# Display only files that exist
+while (<$cmd>) {
+  chomp $_;
+  say $_ if -e $_;
+}
