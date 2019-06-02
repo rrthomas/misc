@@ -26,6 +26,7 @@ END
 
 my $prog = basename($0);
 my ($delay, $help_flag, $version_flag);
+Getopt::Long::Configure("require_order");
 my $opts = GetOptions(
   "wait=i" => \$delay,
   "help" => \$help_flag,
