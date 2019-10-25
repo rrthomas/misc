@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 # my
-# Find files matching a case-insensitive pattern under the user's home directory
+# Find files matching a pattern under the user's home directory
 # Colour the output if stdout is a tty
 # Needs GNU grep
 # (c) Reuben Thomas <rrt@sc3d.org> 2013-2019
