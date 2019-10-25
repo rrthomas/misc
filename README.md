@@ -46,7 +46,7 @@ Counts the number of non-dot files and directories in a directory.
 Grep files of a particular type.
 
 
-## [dgrep](dgrep) (Perl)
+## [dicgrep](dicgrep) (Perl)
 
 Greps the default system dictionary, or that for the given language.
 
