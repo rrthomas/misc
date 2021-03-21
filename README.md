@@ -63,9 +63,9 @@ Cat a possibly-compressed file (`zcat` only works on compressed files). Does not
 Prepends standard input to the given files.
 
 
-## [softwrap](softwrap) (Lua) and [hardwrap](hardwrap) (sh)
+## [softwrap](softwrap) (Lua) and [hardwrap](hardwrap) (Python)
 
-Soft and hard wrap text. `hardwrap` just uses `fold`.
+Soft and hard wrap text.
 
 
 ## [reverse](reverse) (sh)

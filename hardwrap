@@ -1,7 +1,25 @@
-#!/bin/sh
-# hardwrap
-# Hard wrap text
-# (c) Reuben Thomas <rrt@sc3d.org> 1999ish
+#!/usr/bin/env python3
+#
+# © Reuben Thomas <rrt@sc3d.org> 1999ish (shell/fold), 2021 (Python)
 # This program is in the public domain
 
-fold -s -w 72 "$@"
+import sys
+import argparse
+import fileinput
+import textwrap
+
+
+# Command-line arguments
+parser = argparse.ArgumentParser(
+    description='Hard wrap text.',
+)
+parser.add_argument('-V', '--version', action='version',
+                    version='%(prog)s 0.2 (21 Mar 2021) by Reuben Thomas <rrt@sc3d.org>')
+parser.add_argument('--width', '-w', type=int, default=80,
+                    help='Width to wrap to (default %(default)s)')
+parser.add_argument('file', metavar='FILE', nargs='+',
+                    help='Text file to hard wrap')
+args = parser.parse_args()
+
+for line in fileinput.input():
+    print(textwrap.fill(line, width=args.width))
