@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 # thumbify
 # Add EXIF thumbnails to images
+# FIXME: Use jhead to (re)generate the thumbnail?
 # (c) Reuben Thomas <rrt@sc3d.org> 14/8/2006, 2/10/2007, 9/6/2008, 12/4/2010, 30/6/2012, 7/7/2013
 # Released under the GPL version 3, or (at your option) any later
 # version.
