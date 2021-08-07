@@ -3,6 +3,7 @@
 # (c) Reuben Thomas 2014-2021
 # Released under the GPL version 3, or (at your option) any later version.
 
+# FIXME: add --wrapper=COMMAND that will be prepended to the command invocation
 if [ $# -lt 1 ]; then
 cat <<EOF
 Usage: rerun [ENVIRONMENT] PROGRAM-PATH [ARGUMENT...]
