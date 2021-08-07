@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run a program with modified environment
-# (c) Reuben Thomas   29th April, 5th May 2013, 17th October 2013, 10th September 2014, 16th August 2018
+# (c) Reuben Thomas 2014-2021
 # Released under the GPL version 3, or (at your option) any later version.
 
 if [ $# -lt 1 ]; then
@@ -27,7 +27,7 @@ shift
 
 # Find real program
 path_remove ()  {
-    export PATH=`echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//'`
+    export PATH=$(echo -n $PATH | awk -v RS=: -v ORS=: '$0 != "'$1'"' | sed 's/:$//')
 }
 
 old_PATH="$PATH"
