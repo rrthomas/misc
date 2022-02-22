@@ -1,0 +1,65 @@
+#!/usr/bin/python3
+#
+# © Reuben Thomas <rrt@sc3d.org> 2022
+# Released under the GPL version 3, or (at your option) any later version.
+
+import argparse
+import warnings
+
+def simple_warning(msg, cat, filename, lineno, file, line):
+    print('{}: {}'.format(parser.prog, msg), file=file)
+warnings.showwarning = simple_warning
+
+def die(code, msg):
+    warn(msg)
+    sys.exit(code)
+
+# Command-line arguments
+parser = argparse.ArgumentParser(
+    description='Check matching pairs in a text file.',
+)
+parser.add_argument('-V', '--version', action='version',
+                    version='%(prog)s 0.1 (22nd February 2022) by Reuben Thomas <rrt@sc3d.org>')
+parser.add_argument('--open', metavar='CHARACTER', default='“')
+parser.add_argument('--close', metavar='CHARACTER', default='”')
+parser.add_argument('file', metavar='FILE', nargs='+')
+args = parser.parse_args()
+
+if len(args.open) != 1:
+    die(1, 'open character must be a single character')
+open_char = args.open
+if len(args.close) != 1:
+    die(1, 'close character must be a single character')
+close_char = args.close
+
+for f in args.file:
+    s = open(f).read()
+
+    def check_pairs(s, diagnostics=0):
+        min_depth = 0
+        depth = 0
+        line = 1
+        def warn(msg):
+            warnings.warn(f"{f}:{line}: {msg}")
+        for c in s:
+            if c == open_char:
+                depth += 1
+                if diagnostics > 1:
+                    warn(f"{open_char} {depth}")
+            elif c == close_char:
+                depth -= 1
+                if diagnostics > 0:
+                    if diagnostics > 1:
+                        warn(f"{close_char} {depth}")
+                    if depth < min_depth:
+                        warn(f"unmatched {close_char}")
+                        min_depth = min(depth, min_depth)
+            elif c == '\n':
+                line += 1
+        return depth
+
+    final_depth = check_pairs(s)
+    if final_depth < 0:
+        check_pairs(s, 1)
+    elif final_depth > 0:
+        check_pairs(s, 2)

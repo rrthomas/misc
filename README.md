@@ -112,3 +112,8 @@ Maintains a counter in a file: each time `counter` is invoked the counter in the
 *`date2ctime` is by Steve Kinzler*
 
 Convert between ctime and date strings.
+
+
+## [check-pairs](check-pairs) (Python)
+
+Checks that pairs of characters, such as curly quotes, are correctly matched in a text file.
