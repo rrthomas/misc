@@ -3,8 +3,10 @@
 # © Reuben Thomas <rrt@sc3d.org> 2022
 # Released under the GPL version 3, or (at your option) any later version.
 
+import sys
 import argparse
 import warnings
+from warnings import warn
 
 def simple_warning(msg, cat, filename, lineno, file, line):
     print('{}: {}'.format(parser.prog, msg), file=file)
