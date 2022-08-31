@@ -1,5 +1,5 @@
 #!/bin/sh
-# Create and update per-user mlocate database
+# Create and update per-user [mp]locate database
 # Reuben Thomas 29th-31st August 2017
 
 db_file=`xdg-cache-dir`/locate.db
