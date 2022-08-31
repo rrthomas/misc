@@ -23,7 +23,7 @@ chomp $xdg_cache_dir;
 my $database = "$xdg_cache_dir/locate.db.txt";
 
 # Grep database
-open(my $cmd, '-|', "grep", "--color=auto", @ARGV, $pattern, $database) or die $!;
+open(my $cmd, '-|', "grep", "--text", "--color=auto", @ARGV, $pattern, $database) or die $!;
 
 # Display only files that exist
 while (<$cmd>) {
