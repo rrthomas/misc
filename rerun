@@ -20,8 +20,8 @@ exit 1
 fi
 
 if [[ "$1" == *=* ]]; then
-  environment="$1"
-  shift
+    environment="$1"
+    shift
 fi
 program="$1"
 shift
