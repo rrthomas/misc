@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+# Adapted from https://stackoverflow.com/questions/623764/find-non-utf8-filenames-on-linux-file-system
+
+import argparse
+import itertools
+import os
+import sys
+
+# Command-line arguments
+parser = argparse.ArgumentParser(
+    description='Find files with non-UTF-8 names.',
+)
+parser.add_argument('-V', '--version', action='version',
+                    version='%(prog)s 1.00 (29th April 2023) by Reuben Thomas <rrt@sc3d.org>')
+parser.add_argument('file', metavar='FILE', nargs='+')
+args = parser.parse_args()
+
+for root in args.file:
+    for this_dir, dirs, files in os.walk(root):
+        for obj in itertools.chain(dirs, files):
+            try:
+                u = obj.encode('utf-8')
+            except UnicodeError:
+                sys.stderr.write(os.path.join(this_dir, obj) + '\n')
