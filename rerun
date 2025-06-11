@@ -44,4 +44,4 @@ export PATH="$old_PATH"
 if test -n "$environment"; then
     export $environment
 fi
-exec -a $program $real_program "$@"
+exec -a $real_program $real_program "$@"
