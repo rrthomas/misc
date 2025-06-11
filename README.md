@@ -34,6 +34,18 @@ Perform a command, preserving the timestamp of a file.
 Find a file in the user’s home directory. GNU grep is used for colour output when standard output is a terminal. Uses a database created by `myupdatedb`.
 
 
+## [scp-same-place](scp-same-place) (Python)
+
+*Needs `scp`*
+
+Copy the source to the same place on the target. For example:
+
+```
+scp-same-place foo:Downloads/foo.mp4 # Copies foo.mp4 to ~/Downloads
+scp-same-place this/that baz: # Copies this/that to ~/this/that on baz
+```
+
+
 ## [countdir](countdir) (Perl)
 
 Counts the number of non-dot files and directories in a directory.

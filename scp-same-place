@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+import argparse
+import os
+import re
+import subprocess
+import sys
+import warnings
+from warnings import warn
+
+
+def simple_warning(msg, cat, filename, lineno, file, line):
+    print(f"{parser.prog}: {msg}", file=file or sys.stderr)
+
+
+warnings.showwarning = simple_warning
+
+
+def die(code, msg):
+    warn(msg)
+    sys.exit(code)
+
+
+# Command-line arguments.
+parser = argparse.ArgumentParser(
+    prog="scp-same-place",
+    description="Copy a file from a remote machine to the same place on the local machine.",
+)
+parser.add_argument(
+    "source",
+    metavar="FILE",
+    help="source path",
+)
+parser.add_argument(
+    "target",
+    metavar="HOSTNAME",
+    nargs="?",
+    help="target host",
+)
+args = parser.parse_args()
+
+# Check arguments and get path
+m = re.match(r'([^:]+:)?(.+)', args.source)
+if m is None:
+    die(1, f"{args.source} is not a valid source")
+source_host = m.group(1)
+path = m.group(2)
+if os.path.isabs(path) or source_host is None:
+    full_path = os.path.abspath(path)
+    host_relative_path = re.sub(f"^{os.path.expanduser('~')}/", "", full_path)
+else:
+    full_path = os.path.join("~", path)
+    host_relative_path = path
+
+if source_host is None:
+    source = full_path
+else:
+    source = f"{source_host}{host_relative_path}"
+
+if args.target is None:
+    target = full_path
+else:
+    target_host = args.target
+    if len(target_host) == 0 or target_host[-1] != ":" or "/" in target_host:
+        die(1, f"{target_host} is not a hostname")
+    target = f"{target_host}{host_relative_path}"
+
+# Copy the file
+# FIXME: allow rsync -aUHSP as alternative
+# subprocess.check_call(["rsync", "-aUHSP", source, target])
+subprocess.check_call(["scp", "-prC", source, target])
