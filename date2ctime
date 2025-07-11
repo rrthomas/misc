@@ -3,6 +3,7 @@
 # Steve Kinzler, kinzler@cs.indiana.edu, Jan 00
 # http://www.cs.indiana.edu/~kinzler/home.html#unix
 # Tweaked cosmetically by Reuben Thomas   10th February 2016
+# Fixed to control date's output 11th July 2025
 
 usage="usage: `basename $0` [DATE]"
 if [ "$1" = "-h" ]; then
@@ -10,9 +11,9 @@ if [ "$1" = "-h" ]; then
     exit 0
 fi
 if [ $# -eq 0 ]; then
-    date=`date`
+    date=$(date --iso-8601=seconds)
 else
     date=$1
 fi
 
-echo `date +%s -d "$date"`
+echo $(date +%s -d "$date")
