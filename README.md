@@ -97,7 +97,7 @@ A signature-with-random-tagline generator: it appends a random line from `~/.tag
 
 ## [pdf2grayscale](pdf2grayscale) (sh)
 
-*Needs [ImageMagick](http://imagemagick.org)*
+*Needs [ImageMagick](https://imagemagick.org)*
 
 Convert a PDF file to grayscale, to avoid wasting colour ink or toner when printing.
 
