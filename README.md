@@ -63,7 +63,7 @@ Grep files of a particular type.
 Greps the default system dictionary, or that for the given language.
 
 
-## [zcat](zcat) (Perl)
+## [zcat](zcat) (Python)
 
 *Needs `atool`*
 

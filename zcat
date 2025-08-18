@@ -1,7 +1,7 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 # zcat
 # cat possibly compressed files
-# (c) Reuben Thomas   19/10/06-16/8/16
+# (c) Reuben Thomas   19/10/06-16/8/16 (Perl); 18th August 2025 (Python)
 # Distributed under the GNU General Public License version 3, or (at
 # your option) any later version. There is no warranty.
 
@@ -9,29 +9,26 @@
 # Depends on: acat (atool)
 # FIXME: Accept basic command-line options including --
 
-use strict;
-use warnings;
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
 
-use File::Basename;
 
-use Perl6::Slurp;
+name = Path(sys.argv[0]).name
 
-my $name = basename($0);
+def isCompressed(file: os.PathLike):
+    mimetype = subprocess.check_output(
+        ["file", "--mime", "--brief", "--uncompress", "--dereference", "--", str(file)],
+        text=True,
+    )
+    return re.search(" compressed-encoding=", mimetype)
 
-sub isCompressed {
-  my ($file) = @_;
-  local *READER;
-  open(READER, "-|", "file", "--mime", "--brief", "--uncompress", "--dereference", "--", $file);
-  my $mimetype = slurp \*READER;
-  chomp $mimetype;
-  return $mimetype =~ m/ compressed-encoding=/;
-}
-
-if ($#ARGV >= 0) {
-  foreach my $file (@ARGV) {
-    my @cat_cmd = (isCompressed($file) ? "acat" : "cat");
-    system @cat_cmd, "--", $file;
-  }
-} else {
-  die "Usage: $name FILE...\n";
-}
+if len(sys.argv) > 0:
+    for file in sys.argv[1:]:
+        cat_cmd = "acat" if isCompressed(file) else "cat"
+        subprocess.check_call([cat_cmd, "--", file])
+else:
+    print(f"Usage: {name} FILE...", file=sys.stderr)
+    exit(1)
