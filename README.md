@@ -104,7 +104,7 @@ Convert a PDF file to grayscale, to avoid wasting colour ink or toner when print
 
 ## [lp2](lp2) (Perl)
 
-Print files two-sided on a one sided printer by printing the even and then the odd pages. It's set up to work sensibly on my printer (straight paper path, pages come out face down). It works with any file type that CUPS can print.
+Print files two-sided on a one sided printer by printing the even and then the odd pages. It’s set up to work sensibly on my printer (straight paper path, pages come out face down). It works with any file type that CUPS can print.
 
 
 ## [thumbify](thumbify) (Perl)
