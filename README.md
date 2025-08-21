@@ -29,7 +29,7 @@ Perform a command, preserving the timestamp of a file.
 
 ## [my](my) (Perl, sh)
 
-*Needs `mlocate` and GNU `grep`*
+*Needs `plocate` and GNU `grep`*
 
 Find a file in the user’s home directory. GNU grep is used for colour output when standard output is a terminal. Uses a database created by `myupdatedb`.
 
